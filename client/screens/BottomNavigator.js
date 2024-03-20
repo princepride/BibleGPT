@@ -25,8 +25,8 @@ const BottomNavigator = () => {
       })}
     >
       <Tab.Screen name={t("BottomNavigator_Bible")} component={BiblePage} />
-      <Tab.Screen name="GPT" component={GPTPage} />
-      <Tab.Screen name="Settings" component={SettingsPage} />
+      <Tab.Screen name={t("BottomNavigator_GPT")} component={GPTPage} />
+      <Tab.Screen name={t("BottomNavigator_Settings")} component={SettingsPage} />
     </Tab.Navigator>
   );
 }
