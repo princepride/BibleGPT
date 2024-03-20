@@ -2,5 +2,7 @@
     "BottomNavigator_Bible":"Bible",
     "BottomNavigator_GPT":"GPT",
     "BottomNavigator_Settings":"Settings",
-    "SettingsPage_Select_Language":"Select Language"
+    "SettingsPage_Select_Language":"Select Language",
+    "BiblePage_No_Previous_alert":"You are at the beginning of the book.",
+    "BiblePage_No_Next_alert":"You have reached the end of the book."
 }

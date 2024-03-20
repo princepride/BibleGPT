@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import bibleZH from '../assets/data/bible-zh.json';
 
 const BiblePage = () => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const {bibleIndex, setBibleIndex} = useStateContext();
   const [modalVisible, setModalVisible] = useState(false);
   const [bibleData, setBibleData] = useState(bibleZH);
@@ -47,7 +47,7 @@ const BiblePage = () => {
 
   const goToPreviousChapter = () => {
     if (bibleIndex.chapter === 0) {
-      Alert.alert("No previous chapters", "You are at the beginning of the book.");
+      Alert.alert(t("BiblePage_No_Previous_alert"));
     } else {
       setBibleIndex((prevIndex) => ({
         ...prevIndex,
@@ -58,7 +58,7 @@ const BiblePage = () => {
 
   const goToNextChapter = () => {
     if (bibleIndex.chapter === bibleData[bibleIndex.book].length - 1) {
-      Alert.alert("No more chapters", "You have reached the end of the book.");
+      Alert.alert(t("BiblePage_No_Next_alert"));
     } else {
       setBibleIndex((prevIndex) => ({
         ...prevIndex,

@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
 
 const SettingsPage = () => {
-    // 当前选中的语言
     const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
 
     const { t } = useTranslation();

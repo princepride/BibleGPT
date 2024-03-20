@@ -2,5 +2,7 @@
     "BottomNavigator_Bible":"圣经",
     "BottomNavigator_GPT":"灵粮",
     "BottomNavigator_Settings":"设置",
-    "SettingsPage_Select_Language":"选择语言"
+    "SettingsPage_Select_Language":"选择语言",
+    "BiblePage_No_Previous_alert":"这是本书第一章了。",
+    "BiblePage_No_Next_alert":"这是本书最后一章了。"
 }
