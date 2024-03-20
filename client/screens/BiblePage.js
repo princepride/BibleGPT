@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, Button, StyleSheet, Alert, ScrollView } from 'react-native';
+import { View, Text, Modal, Button, StyleSheet, Alert, ScrollView, StatusBar } from 'react-native';
 import {Picker} from '@react-native-picker/picker'
 import { useStateContext } from '../contexts/ContextProvider';
 import { useTranslation } from 'react-i18next';
@@ -116,8 +116,8 @@ const BiblePage = () => {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: StatusBar.currentHeight,
     flex: 1,
-    justifyContent: 'space-between',
   },
   modalView: {
     marginTop: 22,
