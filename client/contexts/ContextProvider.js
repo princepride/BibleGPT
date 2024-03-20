@@ -10,8 +10,10 @@ export const ContextProvider = ({ children }) => {
     chapter:0,
   });
 
+  const [language, setLanguage] = useState("zh");
+
   return (
-    <StateContext.Provider value={{ bibleIndex, setBibleIndex }}>
+    <StateContext.Provider value={{ bibleIndex, setBibleIndex, language, setLanguage }}>
       {children}
     </StateContext.Provider>
   );

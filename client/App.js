@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import BottomNavigator from './pages/BottomNavigator';
+import BottomNavigator from './screens/BottomNavigator';
 import { ContextProvider } from './contexts/ContextProvider';
 
 export default function App() {
