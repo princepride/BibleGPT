@@ -2,8 +2,8 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 // 引入各种语言的翻译文件
-import en from './en.json';
-import zh from './zh.json';
+import en from './assets/i18n/en.json';
+import zh from './assets/i18n/zh.json';
 
 i18n
     .use(initReactI18next)
