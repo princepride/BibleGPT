@@ -1,5 +1,6 @@
 {
     "BottomNavigator_Bible":"Bible",
     "BottomNavigator_GPT":"GPT",
-    "BottomNavigator_Settings":"Settings"
+    "BottomNavigator_Settings":"Settings",
+    "SettingsPage_Select_Language":"Select Language"
 }
