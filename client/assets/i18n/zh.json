@@ -5,5 +5,7 @@
     "SettingsPage_Select_Language":"选择语言",
     "BiblePage_No_Previous_Alert":"这是本书第一章了。",
     "BiblePage_No_Next_Alert":"这是本书最后一章了。",
-    "ContextProvider_ChatData_System":"欢迎来到灵粮，愿上帝祝福你，在这里我会用圣经为你答疑解惑。"
+    "ContextProvider_ChatData_System":"欢迎来到灵粮，愿上帝祝福你，在这里我会用圣经为你答疑解惑。",
+    "InputBox_TextInput_Placeholder":"在此输入...",
+    "InputBox_Send":"发送"
 }

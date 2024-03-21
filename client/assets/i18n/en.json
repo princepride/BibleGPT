@@ -5,5 +5,7 @@
     "SettingsPage_Select_Language":"Select Language",
     "BiblePage_No_Previous_Alert":"You are at the beginning of the book.",
     "BiblePage_No_Next_Alert":"You have reached the end of the book.",
-    "ContextProvider_ChatData_System":"Welcome to Bread Of Life, may God bless you. Here, I will use the Bible to answer your questions and provide enlightenment."
+    "ContextProvider_ChatData_System":"Welcome to Bread Of Life, may God bless you. Here, I will use the Bible to answer your questions and provide enlightenment.",
+    "InputBox_TextInput_Placeholder":"Type your message...",
+    "InputBox_Send":"Send"
 }

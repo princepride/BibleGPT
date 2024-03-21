@@ -1,7 +1,9 @@
 import { View, TextInput, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const InputBox = ({ onSend }) => {
+    const { t } = useTranslation();
     const [text, setText] = useState('');
 
     const handleSend = () => {
@@ -15,12 +17,12 @@ const InputBox = ({ onSend }) => {
     <View style={styles.container}>
         <TextInput
             style={styles.input}
-            placeholder="Type your message..."
+            placeholder={t("InputBox_TextInput_Placeholder")}
             value={text}
             onChangeText={setText}
         />
         <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
-            <Text style={styles.sendButtonText}>Send</Text>
+            <Text style={styles.sendButtonText}>{t("InputBox_Send")}</Text>
         </TouchableOpacity>
         </View>
     );
