@@ -1,3 +1,11 @@
 bitsandbytes
 accelerate
 autoawq
+
+llama-index-llms-huggingface
+llama-index-embeddings-huggingface
+llama-index-embeddings-instructor
+llama-index-vector-stores-chroma
+llama_index
+huggingface_hub
+modelscope
