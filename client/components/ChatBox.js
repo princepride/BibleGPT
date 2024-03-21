@@ -4,7 +4,7 @@ import React from 'react';
 const ChatBox = ({ data }) => {
   const renderItem = ({ item }) => {
     const [role, content] = item;
-    const isUser = role === 'user';
+    const isUser = role === '<|user|>';
 
     return (
       <View style={[styles.chatItem, isUser ? styles.userItem : styles.assistantItem]}>

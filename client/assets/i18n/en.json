@@ -1,8 +1,9 @@
 {
     "BottomNavigator_Bible":"Bible",
-    "BottomNavigator_GPT":"GPT",
+    "BottomNavigator_GPT":"Bread Of Life",
     "BottomNavigator_Settings":"Settings",
     "SettingsPage_Select_Language":"Select Language",
-    "BiblePage_No_Previous_alert":"You are at the beginning of the book.",
-    "BiblePage_No_Next_alert":"You have reached the end of the book."
+    "BiblePage_No_Previous_Alert":"You are at the beginning of the book.",
+    "BiblePage_No_Next_Alert":"You have reached the end of the book.",
+    "ContextProvider_ChatData_System":"Welcome to Bread Of Life, may God bless you. Here, I will use the Bible to answer your questions and provide enlightenment."
 }

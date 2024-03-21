@@ -8,7 +8,7 @@ const GPTPage = () => {
     const { chatData, setChatData } = useStateContext();
 
     const handleSend = (text) => {
-        setChatData([...chatData, ['user', text]]);
+        setChatData([...chatData, ['<|user|>', text]]);
         // 在这里可以添加将用户输入发送给聊天机器人的逻辑
     };
 

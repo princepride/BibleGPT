@@ -47,7 +47,7 @@ const BiblePage = () => {
 
   const goToPreviousChapter = () => {
     if (bibleIndex.chapter === 0) {
-      Alert.alert(t("BiblePage_No_Previous_alert"));
+      Alert.alert(t("BiblePage_No_Previous_Alert"));
     } else {
       setBibleIndex((prevIndex) => ({
         ...prevIndex,
@@ -58,7 +58,7 @@ const BiblePage = () => {
 
   const goToNextChapter = () => {
     if (bibleIndex.chapter === bibleData[bibleIndex.book].length - 1) {
-      Alert.alert(t("BiblePage_No_Next_alert"));
+      Alert.alert(t("BiblePage_No_Next_Alert"));
     } else {
       setBibleIndex((prevIndex) => ({
         ...prevIndex,
