@@ -1,14 +1,30 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { useStateContext } from '../contexts/ContextProvider';
 import React from 'react';
 
 const ChatBox = ({ data }) => {
+  const { setBibleIndex } = useStateContext();
   const renderItem = ({ item }) => {
-    const [role, content] = item;
-    const isUser = role === '<|user|>';
+    console.log(item);
+    const { agent, content, attachments } = item;
+    const isUser = agent === '<|user|>';
 
     return (
       <View style={[styles.chatItem, isUser ? styles.userItem : styles.assistantItem]}>
         <Text style={styles.chatText}>{content}</Text>
+        {attachments && (
+          <View style={styles.attachmentsContainer}>
+            {attachments.map((attachment, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.attachmentButton}
+                onPress={() => setBibleIndex({ book: attachment.book, chapter: attachment.chapter })}
+              >
+                <Text style={styles.attachmentButtonText}>{attachment.content}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
       </View>
     );
   };
@@ -45,6 +61,23 @@ const styles = StyleSheet.create({
   chatText: {
     fontSize: 16,
     color: 'black',
+  },
+  attachmentsContainer: {
+    marginTop: 8,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  attachmentButton: {
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 5,
+    marginRight: 5,
+    marginBottom: 5,
+  },
+  attachmentButtonText: {
+    color: 'white',
+    fontSize: 14,
   },
 });
 
