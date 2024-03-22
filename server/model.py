@@ -11,15 +11,9 @@ class Model:
         self.model = AutoModelForCausalLM.from_pretrained(self.model_name_or_path).cuda()
 
 
-    def generate(self, prompts:List[List[str]]) -> str:
-        combine_prompt = ""
-        for prompt in prompts:
-            for sentence in prompt:
-                combine_prompt += sentence
-            combine_prompt += "</s>"
-        
+    def generate(self, prompt:str) -> str:
         token_input = self.tokenizer(
-            combine_prompt,
+            prompt,
             return_tensors='pt'
         ).input_ids.cuda()
 

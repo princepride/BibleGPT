@@ -1,8 +1,12 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from model import Model
+from vector_embedding import VectorEmbedding
 import time
 
 app = FastAPI()
+model = Model()
+vector_embedding = VectorEmbedding()
 
 # 配置 CORS
 app.add_middleware(
@@ -16,13 +20,20 @@ app.add_middleware(
 @app.post("/")
 async def chat(request: Request):
     data = await request.json()
-    print(data)
-    time.sleep(5)
+
+    query = data[-1].content
+    vectors = vector_embedding.query_and_rerank(query)
+    prompt = '\n'.join(vectors.text)
+    for d in data[-3:]:
+        prompt += d.agent
+        prompt += d.content
+        prompt += "</s>"
+    response = model.generate(prompt)
+
+    attachments = [{'book': vector.metadata.book, 'chapter': vector.metadata.chapter, 'content': vector.text} for vector in vectors]
+
     return {
         'agent': '<|assistant|>',
-        'content': 'I am doing well, thank you for asking. How can I assist you today?',
-        'attachments': [
-            {'book': "历代志上", 'chapter': 8, 'content': "test6"},
-            {'book': "传道书", 'chapter': 1, 'content': "test5"}
-        ]
+        'content': {response},
+        'attachments': {attachments}
     }
