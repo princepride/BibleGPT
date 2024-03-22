@@ -1,4 +1,3 @@
-from typing import List
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 class Model:
@@ -21,7 +20,7 @@ class Model:
         generation_output = self.model.generate(
             token_input,
             do_sample=True,
-            temperature=0.7,
+            temperature=0.3,
             top_p=0.95,
             top_k=40,
             max_new_tokens=512
@@ -30,4 +29,4 @@ class Model:
         # Get the tokens from the output, decode them, print them
         token_output = generation_output[0]
         text_output = self.tokenizer.decode(token_output)
-        return text_output.replace(combine_prompt, "")
+        return text_output.replace(prompt, "")

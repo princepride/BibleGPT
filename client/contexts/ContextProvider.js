@@ -16,15 +16,6 @@ const [chatData, setChatData] = useState([
   {
     agent:'<|system|>',
     content:t("ContextProvider_ChatData_System"),
-  },
-  {
-    agent:'<|user|>',
-    content:'Hello, how are you?',
-  },
-  {
-    agent:'<|assistant|>',
-    content:'I am doing well, thank you for asking. How can I assist you today?',
-    attachments:[{book:"历代志上",chapter:3,content:"test1"},{book:"传道书",chapter:1,content:"test2"}]
   }
 ])
 
