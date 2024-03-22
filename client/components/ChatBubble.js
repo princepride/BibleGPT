@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         },
         userItem: {
             alignSelf: 'flex-end',
-            backgroundColor: '#007AFF',
+            backgroundColor: '#E5E5EA',
         },
         assistantItem: {
             alignSelf: 'flex-start',
@@ -72,10 +72,10 @@ const styles = StyleSheet.create({
             flexWrap: 'wrap',
         },
         attachmentButton: {
-            backgroundColor: '#007AFF',
+            backgroundColor: '#333333',
             paddingHorizontal: 10,
             paddingVertical: 5,
-            borderRadius: 5,
+            borderRadius: 15,
             marginRight: 5,
             marginBottom: 5,
         },

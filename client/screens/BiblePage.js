@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   bibleText: {
+    fontSize:22,
     margin: 10,
   },
   navigationContainer: {
