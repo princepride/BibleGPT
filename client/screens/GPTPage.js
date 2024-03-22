@@ -9,10 +9,14 @@ const GPTPage = () => {
     const { chatData, setChatData } = useStateContext();
 
     const handleSend = async (text) => {
-        setChatData(prevChatData => [...prevChatData, { agent: '<|user|>', content: text }]);
+        setChatData(prevChatData => [...prevChatData, { agent: '<|user|>', content: text }, { agent: 'loading' }]);
         await chat({ chatData: [...chatData, { agent: '<|user|>', content: text }] })
         .then(data => {
-            setChatData(prevChatData => [...prevChatData, data]);
+            setChatData(prevChatData => {
+            const updatedChatData = [...prevChatData];
+            updatedChatData.pop(); // 删除最后一个元素(加载状态)
+            return [...updatedChatData, data]; // 将返回的数据添加到更新后的chatData中
+            });
         });
     };
 

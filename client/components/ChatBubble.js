@@ -1,42 +1,53 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useStateContext } from '../contexts/ContextProvider';
 
 const ChatBubble = ({ agent, content, attachments }) => {
-
     const { setBibleIndex } = useStateContext();
     const navigation = useNavigation();
     const { t } = useTranslation();
     const isUser = agent === '<|user|>';
 
     const handleAttachmentPress = (book, chapter) => {
-        setBibleIndex({ book: book, chapter: chapter })
+        setBibleIndex({ book: book, chapter: chapter });
         navigation.navigate(t("BottomNavigator_Bible"));
     };
 
     return (
-        <View style={[styles.chatItem, isUser ? styles.userItem : styles.assistantItem]}>
-        <Text style={styles.chatText}>{content}</Text>
-        {attachments && (
-            <View style={styles.attachmentsContainer}>
-            {attachments.map((attachment, index) => (
-                <TouchableOpacity
-                key={index}
-                style={styles.attachmentButton}
-                onPress={() => handleAttachmentPress(attachment.book, attachment.chapter)}
-                >
-                <Text style={styles.attachmentButtonText}>{attachment.content}</Text>
-                </TouchableOpacity>
-            ))}
-            </View>
-        )}
+        agent === 'loading' ? (
+        <View style={[styles.assistantItem, styles.loadingItem]}>
+            <ActivityIndicator size="large" color="#007AFF" />
         </View>
+        ) : (
+        <View style={[styles.chatItem, isUser ? styles.userItem : styles.assistantItem]}>
+            <Text style={styles.chatText}>{content}</Text>
+            {attachments && (
+            <View style={styles.attachmentsContainer}>
+                {attachments.map((attachment, index) => (
+                <TouchableOpacity
+                    key={index}
+                    style={styles.attachmentButton}
+                    onPress={() => handleAttachmentPress(attachment.book, attachment.chapter)}
+                >
+                    <Text style={styles.attachmentButtonText}>{attachment.content}</Text>
+                </TouchableOpacity>
+                ))}
+            </View>
+            )}
+        </View>
+        )
     );
 };
 
 const styles = StyleSheet.create({
+        loadingItem: {
+            width: '80%',
+            padding: 12,
+            borderRadius: 8,
+            marginBottom: 8,
+        },
         chatItem: {
             padding: 12,
             borderRadius: 8,
