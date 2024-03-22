@@ -1,8 +1,17 @@
 from fastapi import FastAPI, Request
-from typing import Optional
+from fastapi.middleware.cors import CORSMiddleware
 import time
 
 app = FastAPI()
+
+# 配置 CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8081"],  # 允许的源,可以设置多个
+    allow_credentials=True,
+    allow_methods=["*"],  # 允许的 HTTP 方法
+    allow_headers=["*"],  # 允许的 Headers
+)
 
 @app.post("/")
 async def chat(request: Request):
