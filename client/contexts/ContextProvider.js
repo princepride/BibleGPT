@@ -11,13 +11,6 @@ export const ContextProvider = ({ children }) => {
     book:"创世记",
     chapter:0,
   });
-//   const [chatData, setChatData] = useState([
-//     ['<|system|>', t("ContextProvider_ChatData_System")],
-//     ['<|user|>', 'Hello, how are you?'],
-//     ['<|assistant|>', 'I am doing well, thank you for asking. How can I assist you today?'],
-//     ['<|user|>', 'I need help with a programming question.'],
-//     ['<|assistant|>', 'Sure, I would be happy to help you with your programming question. Please provide more details about the problem you are facing.'],
-// ])
 
 const [chatData, setChatData] = useState([
   {

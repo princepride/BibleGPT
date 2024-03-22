@@ -3,13 +3,17 @@ import React from 'react';
 import ChatBox from '../components/ChatBox';
 import InputBox from '../components/InputBox';
 import { useStateContext } from '../contexts/ContextProvider';
+import {chat} from '../utils/connect'
 
 const GPTPage = () => {
     const { chatData, setChatData } = useStateContext();
 
-    const handleSend = (text) => {
-        setChatData([...chatData, ['<|user|>', text]]);
-        // 在这里可以添加将用户输入发送给聊天机器人的逻辑
+    const handleSend = async (text) => {
+        setChatData(prevChatData => [...prevChatData, { agent: '<|user|>', content: text }]);
+        await chat({ chatData: [...chatData, { agent: '<|user|>', content: text }] })
+        .then(data => {
+            setChatData(prevChatData => [...prevChatData, data]);
+        });
     };
 
     return (
