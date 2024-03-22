@@ -2,7 +2,6 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from model import Model
 from vector_embedding import VectorEmbedding
-import time
 
 app = FastAPI()
 model = Model()
