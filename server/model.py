@@ -1,6 +1,7 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
+import anthropic
 
-class Model:
+class LocalModel:
     def __init__(self) -> None:
         self.model_name_or_path = "TheBloke/zephyr-7B-beta-AWQ"
 
@@ -10,7 +11,13 @@ class Model:
         self.model = AutoModelForCausalLM.from_pretrained(self.model_name_or_path).cuda()
 
 
-    def generate(self, prompt:str) -> str:
+    def generate(self, vectors, chatData):
+        prompt = '\n'.join([vector.get_text() for vector in vectors])
+        prompt += '\n请参考上面的圣经内容，尽可能的用圣经的故事来解答<|user|>的问题\n'
+        for d in chatData[-3:]:
+            prompt += "<|"+d['agent']+"|>"
+            prompt += "<|"+d['content']+"|>"
+            prompt += "</s>"
         token_input = self.tokenizer(
             prompt,
             return_tensors='pt'
@@ -26,7 +33,8 @@ class Model:
             max_new_tokens=512
         )
 
-        # Get the tokens from the output, decode them, print them
         token_output = generation_output[0]
         text_output = self.tokenizer.decode(token_output)
-        return text_output.replace(prompt, "")
+        return text_output[20+len(prompt):]
+
+    

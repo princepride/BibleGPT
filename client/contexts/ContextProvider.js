@@ -14,7 +14,7 @@ export const ContextProvider = ({ children }) => {
 
 const [chatData, setChatData] = useState([
   {
-    agent:'<|system|>',
+    agent:'system',
     content:t("ContextProvider_ChatData_System"),
   }
 ])

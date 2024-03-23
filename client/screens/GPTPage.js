@@ -9,8 +9,8 @@ const GPTPage = () => {
     const { chatData, setChatData } = useStateContext();
 
     const handleSend = async (text) => {
-        setChatData(prevChatData => [...prevChatData, { agent: '<|user|>', content: text }, { agent: 'loading' }]);
-        await chat({ chatData: [...chatData, { agent: '<|user|>', content: text }] })
+        setChatData(prevChatData => [...prevChatData, { agent: 'user', content: text }, { agent: 'loading' }]);
+        await chat({ chatData: [...chatData, { agent: 'user', content: text }] })
         .then(data => {
             setChatData(prevChatData => {
             const updatedChatData = [...prevChatData];

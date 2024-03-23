@@ -8,7 +8,7 @@ const ChatBubble = ({ agent, content, attachments }) => {
     const { setBibleIndex } = useStateContext();
     const navigation = useNavigation();
     const { t } = useTranslation();
-    const isUser = agent === '<|user|>';
+    const isUser = agent === 'user';
 
     const handleAttachmentPress = (book, chapter) => {
         setBibleIndex({ book: book, chapter: chapter });
