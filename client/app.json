@@ -21,10 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.princepride.BibleGPT"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e25cd1ef-8e80-43a3-8a8b-bcf9f64f3b45"
+      }
+    },
+    "owner": "princepride"
   }
 }
