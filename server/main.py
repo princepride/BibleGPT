@@ -1,10 +1,10 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from model import LocalModel
+from model import LocalModel, ClaudeModel
 from vector_embedding import VectorEmbedding
 
 app = FastAPI()
-model = LocalModel()
+model = ClaudeModel() #LocalModel()
 vector_embedding = VectorEmbedding()
 
 # 配置 CORS

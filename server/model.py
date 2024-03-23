@@ -1,4 +1,6 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
+import os
+from dotenv import load_dotenv
 import anthropic
 
 class LocalModel:
@@ -12,11 +14,17 @@ class LocalModel:
 
 
     def generate(self, vectors, chatData):
-        prompt = '\n'.join([vector.get_text() for vector in vectors])
-        prompt += '\n请参考上面的圣经内容，尽可能的用圣经的故事来解答<|user|>的问题\n'
-        for d in chatData[-3:]:
+        rag_context = '\n'.join([vector.metadata['book']+"第"+str(vector.metadata['chapter']+1)+"章："+vector.get_text() for vector in vectors])
+        prompt = ''
+        if len(chatData) >= 3:
+            chat_history = [chatData[0]]+chatData[-2:]
+        else:
+            chat_history = chatData
+        for d in chat_history:
             prompt += "<|"+d['agent']+"|>"
-            prompt += "<|"+d['content']+"|>"
+            prompt += d['content']
+            if d['agent'] == 'system':
+                prompt += '\n尽可能使用以下信息: '+ rag_context
             prompt += "</s>"
         token_input = self.tokenizer(
             prompt,
@@ -30,11 +38,38 @@ class LocalModel:
             temperature=0.3,
             top_p=0.95,
             top_k=40,
-            max_new_tokens=512
+            max_new_tokens=1000
         )
 
         token_output = generation_output[0]
         text_output = self.tokenizer.decode(token_output)
         return text_output[20+len(prompt):]
+        
+class ClaudeModel:
+    def __init__(self):
+        load_dotenv()
+        self.client = anthropic.Anthropic(
+            api_key=os.getenv("CLAUDE_API_KEY"),
+        )
 
-    
+    def generate(self, vectors, chatData):
+        rag_context = '\n'.join([vector.metadata['book']+"第"+str(vector.metadata['chapter']+1)+"章："+vector.get_text() for vector in vectors])
+        prompt = []
+        system = ''
+        if len(chatData) >= 6:
+            chat_history = [chatData[0]]+chatData[-5:]
+        else:
+            chat_history = chatData
+        for d in chat_history:
+            if d['agent'] == 'system':
+                system = d['content']+'\n尽可能使用以下信息: '+ rag_context
+            else:
+                prompt.append({'role':d['agent'], 'content':d['content']})
+        message = self.client.messages.create(
+            model="claude-3-haiku-20240307",
+            max_tokens=1000,
+            temperature=0.3,
+            system=system,
+            messages=prompt
+        )
+        return message.content[0].text
