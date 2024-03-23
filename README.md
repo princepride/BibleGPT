@@ -27,9 +27,7 @@ BibleGPT是一个基于圣经和先进自然语言处理技术的灵修辅助应
 
 ## 应用截图
 
-![1711184019283](image/README/1711184019283.png)
-
-![1711184030699](image/README/1711184030699.png)
+<div style="display:flex;"> <img src="image/README/1711184019283.png" width="300" style="margin-right:10px;"/> <img src="image/README/1711184030699.png" width="300"/> </div>
 
 ## 开发计划
 
