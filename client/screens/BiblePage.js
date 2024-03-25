@@ -47,19 +47,45 @@ const BiblePage = () => {
 
   const goToPreviousChapter = () => {
     if (bibleIndex.chapter === 0) {
-      Alert.alert(t("BiblePage_No_Previous_Alert"));
+      // If it's the first chapter of the book
+      const currentBookIndex = Object.keys(bibleData).indexOf(bibleIndex.book);
+      if (currentBookIndex === 0) {
+        // If it's the first book, show alert
+        Alert.alert(t("BiblePage_No_Previous_Alert"));
+      } else {
+        // Go to the last chapter of the previous book
+        const previousBook = Object.keys(bibleData)[currentBookIndex - 1];
+        setBibleIndex({
+          book: previousBook,
+          chapter: bibleData[previousBook].length - 1,
+        });
+      }
     } else {
+      // Go to the previous chapter of the current book
       setBibleIndex((prevIndex) => ({
         ...prevIndex,
         chapter: prevIndex.chapter - 1,
       }));
     }
   };
-
+  
   const goToNextChapter = () => {
     if (bibleIndex.chapter === bibleData[bibleIndex.book].length - 1) {
-      Alert.alert(t("BiblePage_No_Next_Alert"));
+      // If it's the last chapter of the book
+      const currentBookIndex = Object.keys(bibleData).indexOf(bibleIndex.book);
+      if (currentBookIndex === Object.keys(bibleData).length - 1) {
+        // If it's the last book, show alert
+        Alert.alert(t("BiblePage_No_Next_Alert"));
+      } else {
+        // Go to the first chapter of the next book
+        const nextBook = Object.keys(bibleData)[currentBookIndex + 1];
+        setBibleIndex({
+          book: nextBook,
+          chapter: 0,
+        });
+      }
     } else {
+      // Go to the next chapter of the current book
       setBibleIndex((prevIndex) => ({
         ...prevIndex,
         chapter: prevIndex.chapter + 1,
