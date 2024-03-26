@@ -5,13 +5,17 @@ import { useTranslation } from 'react-i18next';
 import { useStateContext } from '../contexts/ContextProvider';
 
 const ChatBubble = ({ agent, content, attachments }) => {
-    const { setBibleIndex } = useStateContext();
+    const { setBibleIndex, setHighlightedText } = useStateContext();
     const navigation = useNavigation();
     const { t } = useTranslation();
     const isUser = agent === 'user';
 
-    const handleAttachmentPress = (book, chapter) => {
+    const handleAttachmentPress = (book, chapter, attachmentContent) => {
         setBibleIndex({ book: book, chapter: chapter });
+        setHighlightedText(attachmentContent);
+        setTimeout(() => {
+            setHighlightedText(null);
+        }, 2000);
         navigation.navigate(t("BottomNavigator_Bible"));
     };
 
@@ -29,9 +33,9 @@ const ChatBubble = ({ agent, content, attachments }) => {
                 <TouchableOpacity
                     key={index}
                     style={styles.attachmentButton}
-                    onPress={() => handleAttachmentPress(attachment.book, attachment.chapter)}
+                    onPress={() => handleAttachmentPress(attachment.book, attachment.chapter, attachment.content)}
                 >
-                    <Text style={styles.attachmentButtonText}>{attachment.content}</Text>
+                    <Text style={styles.attachmentButtonText}>{attachment.book+"第"+String(attachment.chapter+1)+"章："+attachment.content.slice(0,5)+"..."}</Text>
                 </TouchableOpacity>
                 ))}
             </View>

@@ -23,7 +23,8 @@ async def chat(request: Request):
     query = chatData[-1]['content']
     vectors = vector_embedding.query_and_rerank(query)
     response = model.generate(vectors, chatData)
-    attachments = [{'book': vector.metadata['book'], 'chapter': vector.metadata['chapter'], 'content': vector.metadata['book']+"第"+str(vector.metadata['chapter']+1)+"章："+vector.get_text()[:5]+"..."} for vector in vectors]
+    attachments = [{'book': vector.metadata['book'], 'chapter': vector.metadata['chapter'], 'content': vector.get_text()} for vector in vectors]
+    # attachments = [{'book': vector.metadata['book'], 'chapter': vector.metadata['chapter'], 'content': vector.metadata['book']+"第"+str(vector.metadata['chapter']+1)+"章："+vector.get_text()[:5]+"..."} for vector in vectors]
 
     return {
         'agent': 'assistant',

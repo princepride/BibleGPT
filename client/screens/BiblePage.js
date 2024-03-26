@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Modal, Button, StyleSheet, Alert, ScrollView, StatusBar } from 'react-native';
 import {Picker} from '@react-native-picker/picker'
 import { useStateContext } from '../contexts/ContextProvider';
@@ -7,9 +7,10 @@ import bibleZH from '../assets/data/bible-zh.json';
 
 const BiblePage = () => {
   const { i18n, t } = useTranslation();
-  const {bibleIndex, setBibleIndex} = useStateContext();
+  const {bibleIndex, setBibleIndex, highlightedText} = useStateContext();
   const [modalVisible, setModalVisible] = useState(false);
   const [bibleData, setBibleData] = useState(bibleZH);
+  const scrollViewRef = useRef();
 
   useEffect(() => {
     // 根据i18n.language设置相应的圣经文本数据
@@ -21,6 +22,20 @@ const BiblePage = () => {
         setBibleData(bibleZH); // 默认为英文
     }
   }, [i18n.language]);
+
+  useEffect(() => {
+    if (highlightedText) {
+      const bibleText = bibleData[bibleIndex.book][bibleIndex.chapter];
+      const highlightedIndex = bibleText.indexOf(highlightedText);
+      if (highlightedIndex !== -1) {
+        scrollViewRef.current.scrollTo({
+          y: Number.parseInt(highlightedIndex/18)*22, // 假设每个字符占据10个像素的高度
+          animated: true,
+        });
+      }
+    }
+    console.log(highlightedText)
+  }, [highlightedText, bibleIndex, bibleData]);
 
   const openModal = () => {
     setModalVisible(true);
@@ -93,6 +108,28 @@ const BiblePage = () => {
     }
   };
 
+  const renderBibleText = () => {
+    const bibleText = bibleData[bibleIndex.book][bibleIndex.chapter];
+    if (!highlightedText) {
+      return <Text style={styles.bibleText}>{bibleText}</Text>;
+    }
+  
+    const parts = bibleText.split(new RegExp(`(${highlightedText})`));
+    return (
+      <Text style={styles.bibleText}>
+        {parts.map((part, index) =>
+          part === highlightedText ? (
+            <Text key={index} style={styles.highlightedText}>
+              {part}
+            </Text>
+          ) : (
+            <Text key={index}>{part}</Text>
+          )
+        )}
+      </Text>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Modal
@@ -125,10 +162,8 @@ const BiblePage = () => {
       </Modal>
       {!modalVisible && 
       <React.Fragment>
-        <ScrollView style={styles.scrollView}>
-          <Text style={styles.bibleText}>
-            {bibleData[bibleIndex.book][bibleIndex.chapter]}
-          </Text>
+        <ScrollView ref={scrollViewRef} style={styles.scrollView}>
+          {renderBibleText()}
         </ScrollView>
         <View style={styles.navigationContainer}>
           <View style={styles.navButton}><Button onPress={goToPreviousChapter} title="<" /></View>
@@ -166,6 +201,10 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1, // 使得 ScrollView 占据除导航栏外的所有可用空间
+  },
+  highlightedText: {
+    backgroundColor: '#FA7070',
+    fontStyle: 'italic',
   },
 });
 
