@@ -29,12 +29,11 @@ const BiblePage = () => {
       const highlightedIndex = bibleText.indexOf(highlightedText);
       if (highlightedIndex !== -1) {
         scrollViewRef.current.scrollTo({
-          y: Number.parseInt(highlightedIndex/18)*22, // 假设每个字符占据10个像素的高度
+          y: Number.parseInt(highlightedIndex/16)*30, // 假设缩放因子为 2
           animated: true,
         });
       }
     }
-    console.log(highlightedText)
   }, [highlightedText, bibleIndex, bibleData]);
 
   const openModal = () => {
