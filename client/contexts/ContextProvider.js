@@ -17,17 +17,6 @@ const [chatData, setChatData] = useState([
   {
     agent:'system',
     content:t("ContextProvider_ChatData_System"),
-  },
-  {
-    agent:'agent',
-    content:'xxxxxxxxxx',
-    attachments:[
-      {
-        book:"耶利米书",
-        chapter:1,
-        content:"5耶和华这样说：“你们",
-      }
-    ]
   }
 ])
 
