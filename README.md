@@ -1,4 +1,3 @@
-
 # BibleGPT
 
 BibleGPT是一个基于圣经和先进自然语言处理技术的灵修辅助应用。它采用了多项前沿的AI和信息检索技术,旨在为用户提供更智能、更准确、更有针对性的圣经阅读和心灵引导体验。
@@ -28,6 +27,10 @@ BibleGPT是一个基于圣经和先进自然语言处理技术的灵修辅助应
 ## 应用截图
 
 <div style="display:flex;"> <img src="image/README/1711184019283.png" width="300" style="margin-right:50px;"/> <img src="image/README/1711184030699.png" width="300"/> </div>
+
+## 应用演示
+
+[![Example 1](https://i9.ytimg.com/vi_webp/1afiSOAcanw/mq2.webp?sqp=CJyXk7AG-oaymwEoCMACELQB8quKqQMcGADwAQH4AdYBgALgA4oCDAgAEAEYfyA7KD0wDw==&rs=AOn4CLD_iNnu4Q_d8-nHlWGe4HTdPLGcUw)](https://www.youtube.com/shorts/1afiSOAcanw "Example 1")
 
 ## 开发计划
 
