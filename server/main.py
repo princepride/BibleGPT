@@ -10,7 +10,7 @@ vector_embedding = VectorEmbedding()
 # 配置 CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8081"],  # 允许的源,可以设置多个
+    allow_origins=["*"],  # 允许的源,可以设置多个
     allow_credentials=True,
     allow_methods=["*"],  # 允许的 HTTP 方法
     allow_headers=["*"],  # 允许的 Headers
