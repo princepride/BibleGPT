@@ -133,7 +133,7 @@ class AIYYDSModel:
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         print(prompt)
         message = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="claude-3-haiku-20240307",
             messages=prompt
         )
         return message.choices[0].message.content
