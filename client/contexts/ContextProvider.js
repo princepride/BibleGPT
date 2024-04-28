@@ -6,6 +6,8 @@ const StateContext = createContext();
 export const useStateContext = () => useContext(StateContext);
 
 export const ContextProvider = ({ children }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const { t } = useTranslation();
   const [highlightedText, setHighlightedText] = useState(null);
   const [bibleIndex, setBibleIndex] = useState({
@@ -24,7 +26,8 @@ const [chatData, setChatData] = useState([
   return (
     <StateContext.Provider value={{ bibleIndex, setBibleIndex, 
     chatData, setChatData,
-    highlightedText, setHighlightedText }}>
+    highlightedText, setHighlightedText,
+    isLoggedIn, setIsLoggedIn }}>
       {children}
     </StateContext.Provider>
   );
