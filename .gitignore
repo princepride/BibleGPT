@@ -131,3 +131,5 @@ chroma_db/
 .DS_Store
 
 *.env
+
+*.pyc
