@@ -2,6 +2,7 @@
 
 BibleGPT是一个基于圣经和先进自然语言处理技术的灵修辅助应用。它采用了多项前沿的AI和信息检索技术,旨在为用户提供更智能、更准确、更有针对性的圣经阅读和心灵引导体验。
 
+<<<<<<< Updated upstream
 ## 安装部署
 
 安装python依赖包
@@ -17,6 +18,23 @@ BibleGPT是一个基于圣经和先进自然语言处理技术的灵修辅助应
 `npm install`
 
 部署前端
+=======
+## 安装和启动
+
+安装python依赖包：
+
+`pip install -r ./model/requirements.txt`
+
+启动后端：
+
+`uvicorn main:app --reload`
+
+安装node依赖包：
+
+`npm install`
+
+启动前端：
+>>>>>>> Stashed changes
 
 `npx expo start`
 

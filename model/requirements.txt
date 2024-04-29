@@ -16,4 +16,9 @@ uvicorn
 pydantic
 python-jose
 passlib
+<<<<<<< Updated upstream
 bcrypt
+=======
+bcrypt
+anthropic
+>>>>>>> Stashed changes

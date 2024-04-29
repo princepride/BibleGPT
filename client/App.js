@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import BottomNavigator from './screens/BottomNavigator';
@@ -9,8 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 
-const App = () => {
-  const { isLoggedIn } = useStateContext();
+const AppContent = () => {
+  const { isLoggedIn, setIsLoggedIn } = useStateContext();
 
   useEffect(() => {
     const checkToken = async () => {
@@ -23,16 +23,22 @@ const App = () => {
   }, []);
 
   return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        {isLoggedIn ? (
+          <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
+        ) : (
+          <Stack.Screen name="AuthStack" component={AuthStack} />
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+const App = () => {
+  return (
     <ContextProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          {isLoggedIn ? (
-            <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
-          ) : (
-            <Stack.Screen name="AuthStack" component={AuthStack} />
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
+      <AppContent />
     </ContextProvider>
   );
 };
