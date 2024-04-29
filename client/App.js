@@ -24,7 +24,7 @@ const AppContent = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {isLoggedIn ? (
           <Stack.Screen name="BottomNavigator" component={BottomNavigator} />
         ) : (
