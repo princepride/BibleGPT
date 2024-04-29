@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
@@ -8,28 +8,45 @@ const RegisterPage = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [verificationCode, setVerificationCode] = useState('');
+  const [countdown, setCountdown] = useState(0);
+  const [canRegister, setCanRegister] = useState(false);
+  const [canSendVerificationCode, setCanSendVerificationCode] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (countdown > 0) {
+      timer = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [countdown]);
+
+  const handleSendVerificationCode = async () => {
+    if (!validateEmail(email)) {
+      Alert.alert('Invalid Email', 'Please enter a valid email address.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      Alert.alert('Password Mismatch', 'Password and Confirm Password do not match.');
+      return;
+    }
+    try {
+      await axios.post('http://your-api-url/send-verification-code', { email });
+      setCountdown(60);
+    } catch (error) {
+      console.error('Failed to send verification code:', error);
+    }
+  };
 
   const handleRegister = async () => {
-    if (!validateEmail(email)) {
-      alert('Please enter a valid email address');
+    if (verificationCode.length !== 6) {
+      Alert.alert('Invalid Verification Code', 'Please enter a valid 6-digit verification code.');
       return;
     }
-
-    if (!validatePassword(password)) {
-      alert('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one number');
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      alert('Passwords do not match');
-      return;
-    }
-
     try {
-      await axios.post('http://your-api-url/register', {
-        email,
-        password,
-      });
+      await axios.post('http://your-api-url/register', { email, password, verificationCode });
       navigation.navigate('Login');
     } catch (error) {
       console.error('Registration failed:', error);
@@ -37,14 +54,23 @@ const RegisterPage = ({ navigation }) => {
   };
 
   const validateEmail = (email) => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   };
 
-  const validatePassword = (password) => {
-    const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
-    return re.test(password);
-  };
+  useEffect(() => {
+    setCanRegister(
+      email.length > 0 &&
+        password.length > 0 &&
+        confirmPassword.length > 0 &&
+        verificationCode.length === 6
+    );
+    setCanSendVerificationCode(
+      email.length > 0 &&
+        password.length > 0 &&
+        confirmPassword.length > 0
+    );
+  }, [email, password, confirmPassword, verificationCode]);
 
   return (
     <View style={styles.container}>
@@ -55,7 +81,7 @@ const RegisterPage = ({ navigation }) => {
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
-        keyboardType="email-address"
+        inputMode="email"
       />
       <View style={styles.passwordContainer}>
         <TextInput
@@ -65,9 +91,9 @@ const RegisterPage = ({ navigation }) => {
           value={password}
           onChangeText={setPassword}
         />
-        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+        <Pressable onPress={() => setShowPassword(!showPassword)}>
           <Ionicons name={showPassword ? 'eye' : 'eye-off'} size={24} color="#007AFF" />
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <TextInput
         style={styles.input}
@@ -76,12 +102,45 @@ const RegisterPage = ({ navigation }) => {
         value={confirmPassword}
         onChangeText={setConfirmPassword}
       />
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+      <View style={styles.verificationContainer}>
+        <TextInput
+          style={[styles.input, styles.verificationInput]}
+          placeholder="Verification Code"
+          value={verificationCode}
+          onChangeText={setVerificationCode}
+          maxLength={6}
+          inputMode="numeric"
+        />
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            styles.verificationButton,
+            !canSendVerificationCode && styles.disabledButton,
+            pressed && styles.pressedButton,
+            { pointerEvents: !canSendVerificationCode || countdown > 0 ? 'none' : 'auto' },
+          ]}
+          onPress={handleSendVerificationCode}
+          disabled={!canSendVerificationCode || countdown > 0}
+        >
+          <Text style={[styles.buttonText, { userSelect: 'none' }]}>
+            {countdown > 0 ? `Resend in ${countdown}s` : 'Send Code'}
+          </Text>
+        </Pressable>
+      </View>
+      <Pressable
+        style={({ pressed }) => [
+          styles.button,
+          canRegister ? null : styles.disabledButton,
+          pressed && styles.pressedButton,
+        ]}
+        onPress={handleRegister}
+        disabled={!canRegister}
+      >
+        <Text style={[styles.buttonText, { userSelect: 'none' }]}>Register</Text>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate('Login')}>
         <Text style={styles.loginText}>Already have an account?</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };
@@ -120,12 +179,32 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 10,
   },
+  verificationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  verificationInput: {
+    flex: 1,
+    marginRight: 10,
+  },
   button: {
     backgroundColor: '#007AFF',
     borderRadius: 5,
     paddingVertical: 10,
     alignItems: 'center',
     marginTop: 10,
+  },
+  verificationButton: {
+    backgroundColor: '#FF9500',
+    paddingHorizontal: 15,
+    marginTop: 0,
+  },
+  disabledButton: {
+    backgroundColor: '#ccc',
+  },
+  pressedButton: {
+    opacity: 0.8,
   },
   buttonText: {
     color: '#fff',
