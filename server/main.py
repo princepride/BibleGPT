@@ -29,7 +29,7 @@ app.add_middleware(
     allow_headers=["*"],  # 允许的 Headers
 )
 
-@app.post("/")
+@app.post("/chat")
 async def chat(request: Request):
     request = await request.json()
     chatData = request['chatData']

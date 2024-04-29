@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useStateContext } from '../contexts/ContextProvider';
+import {login} from '../utils/connect'
 
 const LoginPage = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -12,18 +12,12 @@ const LoginPage = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
-    try {
-      const response = await axios.post('http://your-api-url/login', {
-        username,
-        password,
-      });
-      const { access_token } = response.data;
-      await AsyncStorage.setItem('access_token', access_token);
+    await login(username, password)
+    .then(data=> {
+      AsyncStorage.setItem('access_token', data);
       setIsLoggedIn(true);
       navigation.navigate('BottomNavigator');
-    } catch (error) {
-      console.error('Login failed:', error);
-    }
+    })
   };
 
   return (

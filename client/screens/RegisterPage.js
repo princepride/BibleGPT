@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
+import {register} from '../utils/connect'
 
 const RegisterPage = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -45,12 +46,10 @@ const RegisterPage = ({ navigation }) => {
       Alert.alert('Invalid Verification Code', 'Please enter a valid 6-digit verification code.');
       return;
     }
-    try {
-      await axios.post('http://your-api-url/register', { email, password, verificationCode });
+    await register(email, password, verificationCode)
+    .then(data => {
       navigation.navigate('Login');
-    } catch (error) {
-      console.error('Registration failed:', error);
-    }
+    })
   };
 
   const validateEmail = (email) => {
