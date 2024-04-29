@@ -10,3 +10,10 @@ llama_index
 huggingface_hub
 modelscope
 ragas
+
+fastapi
+uvicorn
+pydantic
+python-jose
+passlib
+bcrypt

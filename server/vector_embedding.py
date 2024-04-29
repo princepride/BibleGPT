@@ -4,7 +4,7 @@ from llama_index.core import get_response_synthesizer
 from llama_index.vector_stores.chroma import ChromaVectorStore
 from llama_index.core import VectorStoreIndex, ServiceContext
 from llama_index.embeddings.openai import OpenAIEmbedding
-from llama_index.llms.anthropic import Anthropic
+from llama_index.llms.openai import OpenAI
 from llama_index.core.indices.query.query_transform import HyDEQueryTransform
 from llama_index.core.query_engine import TransformQueryEngine
 import chromadb
@@ -26,8 +26,8 @@ class VectorEmbedding:
     def query_and_rerank(self, query, use_hyde = False):
         if use_hyde:
             os.environ["ANTHROPIC_API_KEY"] = os.getenv("CLAUDE_API_KEY")
-            hyde = HyDEQueryTransform(llm=Anthropic(model="claude-3-haiku-20240307"), include_original=True)
-            response_synthesizer = get_response_synthesizer(llm=Anthropic(model="claude-3-haiku-20240307"))
+            hyde = HyDEQueryTransform(llm=OpenAI(model="gpt-3.5-turbo"), include_original=True)
+            response_synthesizer = get_response_synthesizer(llm=OpenAI(model="gpt-3.5-turbo"))
             query_engine = RetrieverQueryEngine(
                 retriever=self.vector_retriever,
                 response_synthesizer=response_synthesizer,
